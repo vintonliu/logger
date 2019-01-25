@@ -19,6 +19,8 @@ import static com.orhanobut.logger.Utils.checkNotNull;
  * Writes all logs to the disk with CSV format.
  */
 public class DiskLogStrategy implements LogStrategy {
+  final public static int CSV_FORMAT = 0;
+  final public static int TEXT_FORMAT = 1;
 
   @NonNull private final Handler handler;
 
@@ -37,11 +39,17 @@ public class DiskLogStrategy implements LogStrategy {
 
     @NonNull private final String folder;
     private final int maxFileSize;
+    private final int format;
+    @NonNull private final String fileName;
 
-    WriteHandler(@NonNull Looper looper, @NonNull String folder, int maxFileSize) {
+    WriteHandler(@NonNull Looper looper, @NonNull String folder,
+                 int maxFileSize, int format,
+                 @NonNull String fileName) {
       super(checkNotNull(looper));
       this.folder = checkNotNull(folder);
       this.maxFileSize = maxFileSize;
+      this.format = format;
+      this.fileName = fileName;
     }
 
     @SuppressWarnings("checkstyle:emptyblock")
@@ -49,7 +57,7 @@ public class DiskLogStrategy implements LogStrategy {
       String content = (String) msg.obj;
 
       FileWriter fileWriter = null;
-      File logFile = getLogFile(folder, "logs");
+      File logFile = getLogFile(folder, fileName);
 
       try {
         fileWriter = new FileWriter(logFile, true);
@@ -94,21 +102,30 @@ public class DiskLogStrategy implements LogStrategy {
 
       int newFileCount = 0;
       File newFile;
-      File existingFile = null;
+//      File existingFile = null;
 
-      newFile = new File(folder, String.format("%s_%s.csv", fileName, newFileCount));
+      String extension = "csv";
+      if (format == TEXT_FORMAT) {
+        extension = "log";
+      }
+
+      newFile = new File(folder, String.format("%s_%s.%s", fileName, newFileCount, extension));
       while (newFile.exists()) {
-        existingFile = newFile;
+        if (newFile.length() < maxFileSize) {
+            return newFile;
+        }
+//        existingFile = newFile;
         newFileCount++;
-        newFile = new File(folder, String.format("%s_%s.csv", fileName, newFileCount));
+        newFile = new File(folder, String.format("%s_%s.%s", fileName, newFileCount, extension));
       }
 
-      if (existingFile != null) {
-        if (existingFile.length() >= maxFileSize) {
-          return newFile;
-        }
-        return existingFile;
-      }
+//      if (existingFile != null) {
+//        if (existingFile.length() >= maxFileSize) {
+//          return newFile;
+//        }
+//
+//        return existingFile;
+//      }
 
       return newFile;
     }

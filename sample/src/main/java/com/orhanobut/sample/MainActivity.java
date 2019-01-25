@@ -2,16 +2,21 @@ package com.orhanobut.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 
 import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.CsvFormatStrategy;
 import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.orhanobut.logger.TextFormatStrategy;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends Activity {
@@ -49,7 +54,6 @@ public class MainActivity extends Activity {
 
     Logger.addLogAdapter(new DiskLogAdapter());
 
-
     Logger.w("no thread info and only 1 method");
 
     Logger.clearLogAdapters();
@@ -59,6 +63,14 @@ public class MainActivity extends Activity {
         .build();
 
     Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+
+    FormatStrategy txtFormatStrategy = TextFormatStrategy.newBuilder()
+            .dateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.UK))
+            .tag("LoggerCsv")
+            .path(Environment.getExternalStorageDirectory().getPath() + "/Sample")
+            .build();
+    Logger.addLogAdapter(new DiskLogAdapter(txtFormatStrategy));
+
     Logger.i("no thread info and method info");
 
     Logger.t("tag").e("Custom tag for only one use");
