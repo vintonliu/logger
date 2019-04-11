@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2019 51talk. All rights reserved.
+ * AndroidLogAdapter.java
+ * Creator: Vinton.Liu
+ * Create Date: 2019-01-25 18:12:24
+ */
+
 package com.orhanobut.logger;
 
 import android.support.annotation.NonNull;
@@ -20,7 +27,8 @@ import static com.orhanobut.logger.Utils.checkNotNull;
  */
 public class AndroidLogAdapter implements LogAdapter {
 
-  @NonNull private final FormatStrategy formatStrategy;
+  @NonNull
+  private final FormatStrategy formatStrategy;
 
   public AndroidLogAdapter() {
     this.formatStrategy = PrettyFormatStrategy.newBuilder().build();
@@ -30,11 +38,13 @@ public class AndroidLogAdapter implements LogAdapter {
     this.formatStrategy = checkNotNull(formatStrategy);
   }
 
-  @Override public boolean isLoggable(int priority, @Nullable String tag) {
+  @Override
+  public boolean isLoggable(int priority, @Nullable String tag) {
     return true;
   }
 
-  @Override public void log(int priority, @Nullable String tag, @NonNull String message) {
+  @Override
+  public void log(int priority, @Nullable String tag, @NonNull String message) {
     formatStrategy.log(priority, tag, message);
   }
 

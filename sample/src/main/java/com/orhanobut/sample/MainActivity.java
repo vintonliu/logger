@@ -66,10 +66,11 @@ public class MainActivity extends Activity {
 
     FormatStrategy txtFormatStrategy = TextFormatStrategy.newBuilder()
             .dateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.UK))
-            .tag("LoggerCsv")
+            .tag("TEXT1")
             .path(Environment.getExternalStorageDirectory().getPath() + "/Sample")
             .build();
     Logger.addLogAdapter(new DiskLogAdapter(txtFormatStrategy));
+
 
     Logger.i("no thread info and method info");
 

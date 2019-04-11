@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2019 51talk. All rights reserved.
+ * CsvFormatStrategy.java
+ * Creator: Vinton.Liu
+ * Create Date: 2019-01-25 18:12:24
+ */
+
 package com.orhanobut.logger;
 
 import android.os.Environment;
@@ -24,10 +31,14 @@ public class CsvFormatStrategy implements FormatStrategy {
   private static final String NEW_LINE_REPLACEMENT = " <br> ";
   private static final String SEPARATOR = ",";
 
-  @NonNull private final Date date;
-  @NonNull private final SimpleDateFormat dateFormat;
-  @NonNull private final LogStrategy logStrategy;
-  @Nullable private final String tag;
+  @NonNull
+  private final Date date;
+  @NonNull
+  private final SimpleDateFormat dateFormat;
+  @NonNull
+  private final LogStrategy logStrategy;
+  @Nullable
+  private final String tag;
 
   private CsvFormatStrategy(@NonNull Builder builder) {
     checkNotNull(builder);
@@ -38,11 +49,13 @@ public class CsvFormatStrategy implements FormatStrategy {
     tag = builder.tag;
   }
 
-  @NonNull public static Builder newBuilder() {
+  @NonNull
+  public static Builder newBuilder() {
     return new Builder();
   }
 
-  @Override public void log(int priority, @Nullable String onceOnlyTag, @NonNull String message) {
+  @Override
+  public void log(int priority, @Nullable String onceOnlyTag, @NonNull String message) {
     checkNotNull(message);
 
     String tag = formatTag(onceOnlyTag);
@@ -80,7 +93,8 @@ public class CsvFormatStrategy implements FormatStrategy {
     logStrategy.log(priority, tag, builder.toString());
   }
 
-  @Nullable private String formatTag(@Nullable String tag) {
+  @Nullable
+  private String formatTag(@Nullable String tag) {
     if (!Utils.isEmpty(tag) && !Utils.equals(this.tag, tag)) {
       return this.tag + "-" + tag;
     }
@@ -99,32 +113,38 @@ public class CsvFormatStrategy implements FormatStrategy {
     private Builder() {
     }
 
-    @NonNull public Builder date(@Nullable Date val) {
+    @NonNull
+    public Builder date(@Nullable Date val) {
       date = val;
       return this;
     }
 
-    @NonNull public Builder dateFormat(@Nullable SimpleDateFormat val) {
+    @NonNull
+    public Builder dateFormat(@Nullable SimpleDateFormat val) {
       dateFormat = val;
       return this;
     }
 
-    @NonNull public Builder logStrategy(@Nullable LogStrategy val) {
+    @NonNull
+    public Builder logStrategy(@Nullable LogStrategy val) {
       logStrategy = val;
       return this;
     }
 
-    @NonNull public Builder tag(@Nullable String tag) {
+    @NonNull
+    public Builder tag(@Nullable String tag) {
       this.tag = tag;
       return this;
     }
 
-    @NonNull public Builder path(@Nullable String absPath) {
+    @NonNull
+    public Builder path(@Nullable String absPath) {
       this.absPath = absPath;
       return this;
     }
 
-    @NonNull public CsvFormatStrategy build() {
+    @NonNull
+    public CsvFormatStrategy build() {
       if (date == null) {
         date = new Date();
       }

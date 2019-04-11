@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2019 51talk. All rights reserved.
+ * Utils.java
+ * Creator: Vinton.Liu
+ * Create Date: 2019-01-25 18:12:24
+ */
+
 package com.orhanobut.logger;
 
 import android.support.annotation.NonNull;
@@ -95,17 +102,17 @@ final class Utils {
   static String logLevel(int value) {
     switch (value) {
       case VERBOSE:
-        return "VERBOSE";
+        return "V";
       case DEBUG:
-        return "DEBUG";
+        return "D";
       case INFO:
-        return "INFO";
+        return "I";
       case WARN:
-        return "WARN";
+        return "W";
       case ERROR:
-        return "ERROR";
+        return "E";
       case ASSERT:
-        return "ASSERT";
+        return "A";
       default:
         return "UNKNOWN";
     }
@@ -148,7 +155,8 @@ final class Utils {
     return "Couldn't find a correct type for the object";
   }
 
-  @NonNull static <T> T checkNotNull(@Nullable final T obj) {
+  @NonNull
+  static <T> T checkNotNull(@Nullable final T obj) {
     if (obj == null) {
       throw new NullPointerException();
     }

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2019 51talk. All rights reserved.
+ * LogStrategy.java
+ * Creator: Vinton.Liu
+ * Create Date: 2019-01-25 18:12:24
+ */
+
 package com.orhanobut.logger;
 
 import android.support.annotation.NonNull;

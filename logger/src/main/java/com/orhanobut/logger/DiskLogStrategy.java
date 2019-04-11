@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2019 51talk. All rights reserved.
+ * DiskLogStrategy.java
+ * Creator: Vinton.Liu
+ * Create Date: 2019-01-25 18:12:24
+ */
+
 package com.orhanobut.logger;
 
 import android.os.Handler;
@@ -22,13 +29,15 @@ public class DiskLogStrategy implements LogStrategy {
   final public static int CSV_FORMAT = 0;
   final public static int TEXT_FORMAT = 1;
 
-  @NonNull private final Handler handler;
+  @NonNull
+  private final Handler handler;
 
   public DiskLogStrategy(@NonNull Handler handler) {
     this.handler = checkNotNull(handler);
   }
 
-  @Override public void log(int level, @Nullable String tag, @NonNull String message) {
+  @Override
+  public void log(int level, @Nullable String tag, @NonNull String message) {
     checkNotNull(message);
 
     // do nothing on the calling thread, simply pass the tag/msg to the background thread
@@ -37,10 +46,12 @@ public class DiskLogStrategy implements LogStrategy {
 
   static class WriteHandler extends Handler {
 
-    @NonNull private final String folder;
+    @NonNull
+    private final String folder;
     private final int maxFileSize;
     private final int format;
-    @NonNull private final String fileName;
+    @NonNull
+    private final String fileName;
 
     WriteHandler(@NonNull Looper looper, @NonNull String folder,
                  int maxFileSize, int format,
@@ -53,7 +64,8 @@ public class DiskLogStrategy implements LogStrategy {
     }
 
     @SuppressWarnings("checkstyle:emptyblock")
-    @Override public void handleMessage(@NonNull Message msg) {
+    @Override
+    public void handleMessage(@NonNull Message msg) {
       String content = (String) msg.obj;
 
       FileWriter fileWriter = null;

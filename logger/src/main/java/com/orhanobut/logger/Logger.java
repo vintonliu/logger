@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2019 51talk. All rights reserved.
+ * Logger.java
+ * Creator: Vinton.Liu
+ * Create Date: 2019-01-25 18:12:24
+ */
+
 package com.orhanobut.logger;
 
 import android.support.annotation.NonNull;
@@ -73,7 +80,8 @@ public final class Logger {
   public static final int ERROR = 6;
   public static final int ASSERT = 7;
 
-  @NonNull private static Printer printer = new LoggerPrinter();
+  @NonNull
+  private static Printer printer = new LoggerPrinter();
 
   private Logger() {
     //no instance
@@ -103,6 +111,10 @@ public final class Logger {
   /**
    * General log function that accepts all configurations as parameter
    */
+  public static void log(int priority, @Nullable String tag, @Nullable String message) {
+    log(priority, tag, message, null);
+  }
+
   public static void log(int priority, @Nullable String tag, @Nullable String message, @Nullable Throwable throwable) {
     printer.log(priority, tag, message, throwable);
   }

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2019 51talk. All rights reserved.
+ * PrettyFormatStrategy.java
+ * Creator: Vinton.Liu
+ * Create Date: 2019-01-25 18:12:24
+ */
+
 package com.orhanobut.logger;
 
 import android.support.annotation.NonNull;
@@ -56,7 +63,7 @@ public class PrettyFormatStrategy implements FormatStrategy {
   private static final char MIDDLE_CORNER = '├';
   private static final char HORIZONTAL_LINE = '│';
   private static final String DOUBLE_DIVIDER = "────────────────────────────────────────────────────────";
-  private static final String SINGLE_DIVIDER = "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄";
+  private static final String SINGLE_DIVIDER = "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄";
   private static final String TOP_BORDER = TOP_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
   private static final String BOTTOM_BORDER = BOTTOM_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
   private static final String MIDDLE_BORDER = MIDDLE_CORNER + SINGLE_DIVIDER + SINGLE_DIVIDER;
@@ -64,8 +71,10 @@ public class PrettyFormatStrategy implements FormatStrategy {
   private final int methodCount;
   private final int methodOffset;
   private final boolean showThreadInfo;
-  @NonNull private final LogStrategy logStrategy;
-  @Nullable private final String tag;
+  @NonNull
+  private final LogStrategy logStrategy;
+  @Nullable
+  private final String tag;
 
   private PrettyFormatStrategy(@NonNull Builder builder) {
     checkNotNull(builder);
@@ -77,11 +86,13 @@ public class PrettyFormatStrategy implements FormatStrategy {
     tag = builder.tag;
   }
 
-  @NonNull public static Builder newBuilder() {
+  @NonNull
+  public static Builder newBuilder() {
     return new Builder();
   }
 
-  @Override public void log(int priority, @Nullable String onceOnlyTag, @NonNull String message) {
+  @Override
+  public void log(int priority, @Nullable String onceOnlyTag, @NonNull String message) {
     checkNotNull(message);
 
     String tag = formatTag(onceOnlyTag);
@@ -203,7 +214,8 @@ public class PrettyFormatStrategy implements FormatStrategy {
     return -1;
   }
 
-  @Nullable private String formatTag(@Nullable String tag) {
+  @Nullable
+  private String formatTag(@Nullable String tag) {
     if (!Utils.isEmpty(tag) && !Utils.equals(this.tag, tag)) {
       return this.tag + "-" + tag;
     }
@@ -214,38 +226,46 @@ public class PrettyFormatStrategy implements FormatStrategy {
     int methodCount = 2;
     int methodOffset = 0;
     boolean showThreadInfo = true;
-    @Nullable LogStrategy logStrategy;
-    @Nullable String tag = "PRETTY_LOGGER";
+    @Nullable
+    LogStrategy logStrategy;
+    @Nullable
+    String tag = "PRETTY_LOGGER";
 
     private Builder() {
     }
 
-    @NonNull public Builder methodCount(int val) {
+    @NonNull
+    public Builder methodCount(int val) {
       methodCount = val;
       return this;
     }
 
-    @NonNull public Builder methodOffset(int val) {
+    @NonNull
+    public Builder methodOffset(int val) {
       methodOffset = val;
       return this;
     }
 
-    @NonNull public Builder showThreadInfo(boolean val) {
+    @NonNull
+    public Builder showThreadInfo(boolean val) {
       showThreadInfo = val;
       return this;
     }
 
-    @NonNull public Builder logStrategy(@Nullable LogStrategy val) {
+    @NonNull
+    public Builder logStrategy(@Nullable LogStrategy val) {
       logStrategy = val;
       return this;
     }
 
-    @NonNull public Builder tag(@Nullable String tag) {
+    @NonNull
+    public Builder tag(@Nullable String tag) {
       this.tag = tag;
       return this;
     }
 
-    @NonNull public PrettyFormatStrategy build() {
+    @NonNull
+    public PrettyFormatStrategy build() {
       if (logStrategy == null) {
         logStrategy = new LogcatLogStrategy();
       }

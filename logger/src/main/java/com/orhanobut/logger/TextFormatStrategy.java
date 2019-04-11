@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2019 51talk. All rights reserved.
+ * TextFormatStrategy.java
+ * Creator: Vinton.Liu
+ * Create Date: 2019-01-25 18:12:24
+ */
+
 package com.orhanobut.logger;
 
 import android.os.Environment;
@@ -16,12 +23,16 @@ import static com.orhanobut.logger.Utils.checkNotNull;
 public class TextFormatStrategy implements FormatStrategy {
     private static final String NEW_LINE = System.getProperty("line.separator");
     private static final String NEW_LINE_REPLACEMENT = " <br> ";
-    private static final String SEPARATOR = "|";
+    private static final String SEPARATOR = " ";
 
-    @NonNull private final Date date;
-    @NonNull private final SimpleDateFormat dateFormat;
-    @NonNull private final LogStrategy logStrategy;
-    @Nullable private final String tag;
+    @NonNull
+    private final Date date;
+    @NonNull
+    private final SimpleDateFormat dateFormat;
+    @NonNull
+    private final LogStrategy logStrategy;
+    @Nullable
+    private final String tag;
 
     private TextFormatStrategy(@NonNull TextFormatStrategy.Builder builder) {
         checkNotNull(builder);
@@ -32,11 +43,13 @@ public class TextFormatStrategy implements FormatStrategy {
         tag = builder.tag;
     }
 
-    @NonNull public static TextFormatStrategy.Builder newBuilder() {
+    @NonNull
+    public static TextFormatStrategy.Builder newBuilder() {
         return new TextFormatStrategy.Builder();
     }
 
-    @Override public void log(int priority, @Nullable String onceOnlyTag, @NonNull String message) {
+    @Override
+    public void log(int priority, @Nullable String onceOnlyTag, @NonNull String message) {
         checkNotNull(message);
 
         String tag = formatTag(onceOnlyTag);
@@ -56,9 +69,15 @@ public class TextFormatStrategy implements FormatStrategy {
         builder.append(SEPARATOR);
         builder.append(Utils.logLevel(priority));
 
+        // thread
+        builder.append("/[");
+        builder.append(Thread.currentThread().getName());
+        builder.append("]");
+
         // tag
-        builder.append(SEPARATOR);
+        builder.append("[");
         builder.append(tag);
+        builder.append("]:");
 
         // message
 //        if (message.contains(NEW_LINE)) {
@@ -74,7 +93,8 @@ public class TextFormatStrategy implements FormatStrategy {
         logStrategy.log(priority, tag, builder.toString());
     }
 
-    @Nullable private String formatTag(@Nullable String tag) {
+    @Nullable
+    private String formatTag(@Nullable String tag) {
         if (!Utils.isEmpty(tag) && !Utils.equals(this.tag, tag)) {
             return this.tag + "-" + tag;
         }
@@ -95,42 +115,50 @@ public class TextFormatStrategy implements FormatStrategy {
         private Builder() {
         }
 
-        @NonNull public TextFormatStrategy.Builder date(@Nullable Date val) {
+        @NonNull
+        public TextFormatStrategy.Builder date(@Nullable Date val) {
             date = val;
             return this;
         }
 
-        @NonNull public TextFormatStrategy.Builder dateFormat(@Nullable SimpleDateFormat val) {
+        @NonNull
+        public TextFormatStrategy.Builder dateFormat(@Nullable SimpleDateFormat val) {
             dateFormat = val;
             return this;
         }
 
-        @NonNull public TextFormatStrategy.Builder logStrategy(@Nullable LogStrategy val) {
+        @NonNull
+        public TextFormatStrategy.Builder logStrategy(@Nullable LogStrategy val) {
             logStrategy = val;
             return this;
         }
 
-        @NonNull public TextFormatStrategy.Builder tag(@Nullable String tag) {
+        @NonNull
+        public TextFormatStrategy.Builder tag(@Nullable String tag) {
             this.tag = tag;
             return this;
         }
 
-        @NonNull public TextFormatStrategy.Builder path(@Nullable String absPath) {
+        @NonNull
+        public TextFormatStrategy.Builder path(@Nullable String absPath) {
             this.absPath = absPath;
             return this;
         }
 
-        @NonNull public TextFormatStrategy.Builder append(final boolean append) {
+        @NonNull
+        public TextFormatStrategy.Builder append(final boolean append) {
             this.append = append;
             return this;
         }
 
-        @NonNull public TextFormatStrategy.Builder fileName(@Nullable String fileName) {
+        @NonNull
+        public TextFormatStrategy.Builder fileName(@Nullable String fileName) {
             this.fileName = fileName;
             return this;
         }
 
-        @NonNull public TextFormatStrategy build() {
+        @NonNull
+        public TextFormatStrategy build() {
             if (date == null) {
                 date = new Date();
             }

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2019 51talk. All rights reserved.
+ * LogcatLogStrategy.java
+ * Creator: Vinton.Liu
+ * Create Date: 2019-01-25 18:12:24
+ */
+
 package com.orhanobut.logger;
 
 import android.support.annotation.NonNull;
@@ -15,7 +22,8 @@ public class LogcatLogStrategy implements LogStrategy {
 
   static final String DEFAULT_TAG = "NO_TAG";
 
-  @Override public void log(int priority, @Nullable String tag, @NonNull String message) {
+  @Override
+  public void log(int priority, @Nullable String tag, @NonNull String message) {
     checkNotNull(message);
 
     if (tag == null) {
