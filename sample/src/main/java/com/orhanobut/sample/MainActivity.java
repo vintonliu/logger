@@ -29,11 +29,11 @@ public class MainActivity extends Activity {
     Log.d("Tag", "I'm a log which you don't see easily, hehe");
     Log.d("json content", "{ \"key\": 3, \n \"value\": something}");
     Log.d("error", "There is a crash somewhere or any warning");
+    Logger logger = Logger.newBuilder().build();
+    logger.addLogAdapter(new AndroidLogAdapter());
+    logger.d("message");
 
-    Logger.addLogAdapter(new AndroidLogAdapter());
-    Logger.d("message");
-
-    Logger.clearLogAdapters();
+    logger.clearLogAdapters();
 
 
     FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
@@ -44,56 +44,56 @@ public class MainActivity extends Activity {
         .tag("My custom tag")   // (Optional) Custom tag for each log. Default PRETTY_LOGGER
         .build();
 
-    Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+    logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
-    Logger.addLogAdapter(new AndroidLogAdapter() {
+    logger.addLogAdapter(new AndroidLogAdapter() {
       @Override public boolean isLoggable(int priority, String tag) {
         return BuildConfig.DEBUG;
       }
     });
 
-    Logger.addLogAdapter(new DiskLogAdapter());
+    logger.addLogAdapter(new DiskLogAdapter());
 
-    Logger.w("no thread info and only 1 method");
+    logger.w("no thread info and only 1 method");
 
-    Logger.clearLogAdapters();
+    logger.clearLogAdapters();
     formatStrategy = PrettyFormatStrategy.newBuilder()
         .showThreadInfo(false)
         .methodCount(0)
         .build();
 
-    Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+    logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
     FormatStrategy txtFormatStrategy = TextFormatStrategy.newBuilder()
             .dateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.UK))
             .tag("TEXT1")
             .path(Environment.getExternalStorageDirectory().getPath() + "/Sample")
             .build();
-    Logger.addLogAdapter(new DiskLogAdapter(txtFormatStrategy));
+    logger.addLogAdapter(new DiskLogAdapter(txtFormatStrategy));
 
 
-    Logger.i("no thread info and method info");
+    logger.i("no thread info and method info");
 
-    Logger.t("tag").e("Custom tag for only one use");
+    logger.t("tag").e("Custom tag for only one use");
 
-    Logger.json("{ \"key\": 3, \"value\": something}");
+    logger.json("{ \"key\": 3, \"value\": something}");
 
-    Logger.d(Arrays.asList("foo", "bar"));
+    logger.d(Arrays.asList("foo", "bar"));
 
     Map<String, String> map = new HashMap<>();
     map.put("key", "value");
     map.put("key1", "value2");
 
-    Logger.d(map);
+    logger.d(map);
 
-    Logger.clearLogAdapters();
+    logger.clearLogAdapters();
     formatStrategy = PrettyFormatStrategy.newBuilder()
         .showThreadInfo(false)
         .methodCount(0)
         .tag("MyTag")
         .build();
-    Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+    logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
-    Logger.w("my log message with my tag");
+    logger.w("my log message with my tag");
   }
 }
